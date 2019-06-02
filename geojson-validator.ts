@@ -1,13 +1,13 @@
 import { GeojsonHelpers } from "./lib/geojson-helpers";
 import { FeatureCollection } from "./lib/models/feature";
 
-export class GeojsonValidator extends GeojsonHelpers{
+export abstract class GeojsonValidator extends GeojsonHelpers{
     /**
     * @Method: Validate whether the geojon string is valid or not.
     * @Param {string}
     * @Return {string}
     */
-    public isValid(jsonString: string): boolean {
+    public static isValid(jsonString: string): boolean {
         try{
             if(!jsonString || jsonString==""){
                 return false;

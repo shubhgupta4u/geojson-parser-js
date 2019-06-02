@@ -4,7 +4,7 @@ import { FeatureProperty } from "./models/feature-property";
 import { Coordinate } from "./models/coordinate";
 
 export abstract class GeojsonHelpers {   
-   private static isValid(geoJson: any): boolean {
+   protected static isValid(geoJson: any): boolean {
       if (geoJson.type && (geoJson.type.toLowerCase() == "featurecollection" || geoJson.type.toLowerCase() == "feature")
          && (
             (geoJson.type.toLowerCase() == "featurecollection" && geoJson.features && geoJson.features instanceof Array)

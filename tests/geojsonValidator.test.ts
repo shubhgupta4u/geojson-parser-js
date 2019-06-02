@@ -1,17 +1,16 @@
 import { expect } from 'chai';
-import {GeojsonValidator} from '../geojson-validator';
+import {Geojson} from '../geojson-parser';
 
 describe('validateGeojson', function() {
-  let validator:GeojsonValidator=  new GeojsonValidator();
   it('validGeojsonWithNoFeature', function() {
     let validGeojson:string='{ "type": "FeatureCollection",  "features": [] }';
-    let result = validator.isValid(validGeojson);
+    let result = Geojson.isValid(validGeojson);
     expect(result).equal(true);
   });
 
   it('emptyGeojson', function() {
     let invalidGeojson:string="";
-    let result = validator.isValid(invalidGeojson);
+    let result = Geojson.isValid(invalidGeojson);
     expect(result).equal(false);
   });
 });
