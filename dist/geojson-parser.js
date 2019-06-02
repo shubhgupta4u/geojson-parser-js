@@ -38,6 +38,29 @@ var Geojson = /** @class */ (function (_super) {
         }
         return new feature_1.FeatureCollection();
     };
+    /**
+    * @Method: Validate whether the geojon string is valid or not.
+    * @Param {string}
+    * @Return {string}
+    */
+    Geojson.isValid = function (jsonString) {
+        try {
+            if (!jsonString || jsonString == "") {
+                return false;
+            }
+            var geoJson = JSON.parse(jsonString);
+            var features = geojson_helpers_1.GeojsonHelpers.parse(geoJson);
+            if (features) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        catch (error) {
+            return false;
+        }
+    };
     return Geojson;
 }(geojson_helpers_1.GeojsonHelpers));
 exports.Geojson = Geojson;

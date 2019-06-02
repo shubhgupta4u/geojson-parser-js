@@ -1,6 +1,6 @@
 import { FeatureCollection } from "./models/feature";
 export declare abstract class GeojsonHelpers {
-    private static isValid;
+    protected static isValid(geoJson: any): boolean;
     protected static parse(geoJson: any): FeatureCollection;
     private static parseFeature;
     private static getProperties;

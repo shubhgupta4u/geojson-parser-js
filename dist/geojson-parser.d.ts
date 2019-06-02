@@ -7,4 +7,10 @@ export declare abstract class Geojson extends GeojsonHelpers {
     * @Return {string}
     */
     static parse(jsonString: string): FeatureCollection;
+    /**
+    * @Method: Validate whether the geojon string is valid or not.
+    * @Param {string}
+    * @Return {string}
+    */
+    static isValid(jsonString: string): boolean;
 }

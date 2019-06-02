@@ -1,9 +1,9 @@
 {
   "name": "geojson-parser-js",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A typescript library to validate geojson string or parse json to geojson",
-  "main": "dist/GeojsonValidator.js",
-  "types": "dist/GeojsonValidator.d.ts",
+  "main": "dist/geojson-parser.js",
+  "types": "dist/geojson-parser.d.ts",
   "scripts": {
     "build": "tsc",
     "test": "mocha -r ts-node/register tests/**/*.test.ts",
