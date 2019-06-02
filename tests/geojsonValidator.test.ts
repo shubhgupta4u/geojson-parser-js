@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import {GeojsonValidator} from '../GeojsonValidator';
+import {GeojsonValidator} from '../geojson-validator';
 
 describe('validateGeojson', function() {
   let validator:GeojsonValidator=  new GeojsonValidator();

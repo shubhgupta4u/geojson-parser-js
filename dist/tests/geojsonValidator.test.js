@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var chai_1 = require("chai");
-var GeojsonValidator_1 = require("../GeojsonValidator");
+var geojson_validator_1 = require("../geojson-validator");
 describe('validateGeojson', function () {
-    var validator = new GeojsonValidator_1.GeojsonValidator();
+    var validator = new geojson_validator_1.GeojsonValidator();
     it('validGeojsonWithNoFeature', function () {
         var validGeojson = '{ "type": "FeatureCollection",  "features": [] }';
         var result = validator.isValid(validGeojson);
