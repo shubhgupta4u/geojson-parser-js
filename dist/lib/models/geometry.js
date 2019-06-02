@@ -20,9 +20,7 @@ var Geometry = /** @class */ (function () {
         this.id = "";
         this.featureProperties = new Array();
         this.type = type;
-        if (!id && id.length > 0) {
-            this.id = id;
-        }
+        this.id = id;
     }
     return Geometry;
 }());
@@ -51,9 +49,10 @@ var LineString = /** @class */ (function (_super) {
 exports.LineString = LineString;
 var Polygon = /** @class */ (function (_super) {
     __extends(Polygon, _super);
-    function Polygon(type, id) {
+    function Polygon(id, type) {
         if (id === void 0) { id = ""; }
-        var _this = _super.call(this, type | enum_1.GeometryType.Polygon, id) || this;
+        if (type === void 0) { type = enum_1.GeometryType.Polygon; }
+        var _this = _super.call(this, type, id) || this;
         _this.coordinates = new Array();
         return _this;
     }
@@ -64,7 +63,7 @@ var PolygonWithHole = /** @class */ (function (_super) {
     __extends(PolygonWithHole, _super);
     function PolygonWithHole(id) {
         if (id === void 0) { id = ""; }
-        var _this = _super.call(this, enum_1.GeometryType.PolygonWithHole, id) || this;
+        var _this = _super.call(this, id, enum_1.GeometryType.PolygonWithHole) || this;
         _this.holes = new Array();
         return _this;
     }
@@ -97,7 +96,7 @@ var MultiPolygon = /** @class */ (function (_super) {
     __extends(MultiPolygon, _super);
     function MultiPolygon(id) {
         if (id === void 0) { id = ""; }
-        var _this = _super.call(this, enum_1.GeometryType.MultiPoint, id) || this;
+        var _this = _super.call(this, enum_1.GeometryType.MultiPolygon, id) || this;
         _this.polygons = new Array();
         return _this;
     }

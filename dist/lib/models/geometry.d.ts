@@ -17,7 +17,7 @@ export declare class LineString extends Geometry {
 }
 export declare class Polygon extends Geometry {
     readonly coordinates: Array<Coordinate>;
-    constructor(type: GeometryType, id?: string);
+    constructor(id?: string, type?: GeometryType);
 }
 export declare class PolygonWithHole extends Polygon {
     readonly holes: Array<Polygon>;

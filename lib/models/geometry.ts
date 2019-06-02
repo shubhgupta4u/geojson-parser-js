@@ -9,9 +9,7 @@ export abstract class Geometry {
     constructor(type: GeometryType, id: string) {
         this.featureProperties = new Array<FeatureProperty>();
         this.type = type;
-        if (!id && id.length > 0) {
-            this.id = id;
-        }
+        this.id = id;
     }
 }
 
@@ -32,15 +30,15 @@ export class LineString extends Geometry {
 }
 export class Polygon extends Geometry {
     public readonly coordinates:Array<Coordinate>;
-    constructor(type:GeometryType,id: string = "") {
-        super(type|GeometryType.Polygon, id);
+    constructor(id: string = "",type:GeometryType=GeometryType.Polygon) {
+        super(type, id);
         this.coordinates = new Array<Coordinate>();
     }
 }
 export class PolygonWithHole extends Polygon {
     public readonly holes:Array<Polygon>;
     constructor(id: string = "") {
-        super(GeometryType.PolygonWithHole, id);
+        super(id,GeometryType.PolygonWithHole);
         this.holes = new Array<Polygon>();
     }
 }
@@ -61,7 +59,7 @@ export class MultiLineString extends Geometry {
 export class MultiPolygon extends Geometry {
     public readonly polygons:Array<Polygon|PolygonWithHole>;
     constructor(id: string = "") {
-        super(GeometryType.MultiPoint, id);
+        super(GeometryType.MultiPolygon, id);
         this.polygons = new Array<Polygon|PolygonWithHole>();  
     }
 }
