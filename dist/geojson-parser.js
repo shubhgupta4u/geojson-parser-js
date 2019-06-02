@@ -1,19 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var GeojsonParser = /** @class */ (function () {
-    function GeojsonParser() {
+var feature_1 = require("./lib/models/feature");
+var Geojson = /** @class */ (function () {
+    function Geojson() {
     }
     /**
     * @Method: Parse geometries from the json string.
     * @Param {string}
     * @Return {string}
     */
-    GeojsonParser.prototype.parse = function (json) {
+    Geojson.prototype.parse = function (json) {
         if (!json && json.length == 0) {
-            return false;
+            return null;
         }
-        return true;
+        return new feature_1.FeatureCollection();
     };
-    return GeojsonParser;
+    return Geojson;
 }());
-exports.GeojsonParser = GeojsonParser;
+exports.Geojson = Geojson;
