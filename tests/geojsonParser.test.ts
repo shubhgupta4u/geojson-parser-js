@@ -1,12 +1,10 @@
 import { expect, should } from 'chai';
 import {Geojson} from '../geojson-parser';
-import { FeatureCollection } from '../lib/models/feature';
+import { FeatureCollection, GeometryType,  Point, MultiPolygon, Polygon, LineString} from '../models/geojson';
 import * as geojsonSample1 from './sample-geojson/sample1.json';
 import * as geojsonSample2 from './sample-geojson/sample2.json';
 import * as geojsonSample3 from './sample-geojson/sample3.json';
 import * as geojsonSample4 from './sample-geojson/sample4.json';
-import { GeometryType } from '../lib/models/enum';
-import { Point, MultiPolygon, Polygon, LineString } from '../lib/models/geometry';
 
 describe('Geojson', function() {
   

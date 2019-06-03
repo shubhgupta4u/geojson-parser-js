@@ -1,4 +1,4 @@
-import { FeatureCollection } from "./models/feature";
+import { FeatureCollection } from "../models/geojson";
 export declare abstract class GeojsonHelpers {
     protected static isValid(geoJson: any): boolean;
     protected static parse(geoJson: any): FeatureCollection;

@@ -13,7 +13,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var feature_1 = require("./lib/models/feature");
+var geojson_1 = require("./models/geojson");
 var geojson_helpers_1 = require("./lib/geojson-helpers");
 var Geojson = /** @class */ (function (_super) {
     __extends(Geojson, _super);
@@ -36,7 +36,7 @@ var Geojson = /** @class */ (function (_super) {
         catch (error) {
             throw error;
         }
-        return new feature_1.FeatureCollection();
+        return new geojson_1.FeatureCollection();
     };
     /**
     * @Method: Validate whether the geojon string is valid or not.

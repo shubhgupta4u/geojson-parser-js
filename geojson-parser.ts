@@ -1,4 +1,4 @@
-import { FeatureCollection } from "./lib/models/feature";
+import { FeatureCollection } from "./models/geojson";
 import { GeojsonHelpers } from "./lib/geojson-helpers";
 
 export abstract class Geojson extends GeojsonHelpers {

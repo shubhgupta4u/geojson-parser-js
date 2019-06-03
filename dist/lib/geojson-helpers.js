@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var feature_1 = require("./models/feature");
-var geometry_1 = require("./models/geometry");
-var feature_property_1 = require("./models/feature-property");
-var coordinate_1 = require("./models/coordinate");
+var geojson_1 = require("../models/geojson");
+var geojson_2 = require("../models/geojson");
+var geojson_3 = require("../models/geojson");
+var geojson_4 = require("../models/geojson");
 var GeojsonHelpers = /** @class */ (function () {
     function GeojsonHelpers() {
     }
@@ -21,7 +21,7 @@ var GeojsonHelpers = /** @class */ (function () {
                 if (!GeojsonHelpers.isValid(geoJson)) {
                     throw new SyntaxError("geoJson string is not valid.");
                 }
-                var features_1 = new feature_1.FeatureCollection();
+                var features_1 = new geojson_1.FeatureCollection();
                 var featureArray = void 0;
                 if (geoJson.features) {
                     featureArray = geoJson.features;
@@ -103,7 +103,7 @@ var GeojsonHelpers = /** @class */ (function () {
                 var propertyKeyArray = Object.keys(properties);
                 if (propertyKeyArray != null && propertyKeyArray.length > 0) {
                     propertyKeyArray.forEach(function (key) {
-                        featureProperties_1.push(new feature_property_1.FeatureProperty(key, properties[key]));
+                        featureProperties_1.push(new geojson_3.FeatureProperty(key, properties[key]));
                     });
                 }
             }
@@ -115,21 +115,21 @@ var GeojsonHelpers = /** @class */ (function () {
     };
     GeojsonHelpers.getPoint = function (geometry) {
         var coord = GeojsonHelpers.getCoordinate(geometry.coordinates);
-        var point = new geometry_1.Point(coord.lat, coord.lng, geometry.id);
+        var point = new geojson_2.Point(coord.lat, coord.lng, geometry.id);
         return point;
     };
     GeojsonHelpers.getMultiPoint = function (geometry) {
-        var multiPoint = new geometry_1.MultiPoint(geometry.id);
+        var multiPoint = new geojson_2.MultiPoint(geometry.id);
         var coordinates = GeojsonHelpers.getCoordinates(geometry.coordinates);
         if (coordinates && coordinates.length > 0) {
             coordinates.forEach(function (coord) {
-                multiPoint.points.push(new geometry_1.Point(coord.lat, coord.lng));
+                multiPoint.points.push(new geojson_2.Point(coord.lat, coord.lng));
             });
         }
         return multiPoint;
     };
     GeojsonHelpers.getLineString = function (geometry) {
-        var lineString = new geometry_1.LineString(geometry.id);
+        var lineString = new geojson_2.LineString(geometry.id);
         var coordinates = GeojsonHelpers.getCoordinates(geometry.coordinates);
         if (coordinates && coordinates.length > 0) {
             coordinates.forEach(function (coord) {
@@ -139,11 +139,11 @@ var GeojsonHelpers = /** @class */ (function () {
         return lineString;
     };
     GeojsonHelpers.getMultiLineString = function (geometry) {
-        var multiLineString = new geometry_1.MultiLineString(geometry.id);
+        var multiLineString = new geojson_2.MultiLineString(geometry.id);
         var multiLinestringCoords = geometry.coordinates;
         if (multiLinestringCoords && multiLinestringCoords.length > 0) {
             multiLinestringCoords.forEach(function (linestringCoords) {
-                var lineString = new geometry_1.LineString();
+                var lineString = new geojson_2.LineString();
                 var coordinates = GeojsonHelpers.getCoordinates(linestringCoords);
                 if (coordinates && coordinates.length > 0) {
                     coordinates.forEach(function (coord) {
@@ -161,7 +161,7 @@ var GeojsonHelpers = /** @class */ (function () {
     GeojsonHelpers.getPolygon = function (geometry) {
         var polygonCoords = geometry.coordinates;
         if (polygonCoords.length > 1) {
-            var polygonWithHole_1 = new geometry_1.PolygonWithHole();
+            var polygonWithHole_1 = new geojson_2.PolygonWithHole();
             var coordinates = GeojsonHelpers.getCoordinates(polygonCoords[0]);
             if (coordinates && coordinates.length > 0) {
                 coordinates.forEach(function (coord) {
@@ -169,7 +169,7 @@ var GeojsonHelpers = /** @class */ (function () {
                 });
             }
             var _loop_1 = function (index) {
-                var polygon = new geometry_1.Polygon();
+                var polygon = new geojson_2.Polygon();
                 var coordinates_1 = GeojsonHelpers.getCoordinates(polygonCoords[index]);
                 if (coordinates_1 && coordinates_1.length > 0) {
                     coordinates_1.forEach(function (coord) {
@@ -184,7 +184,7 @@ var GeojsonHelpers = /** @class */ (function () {
             return polygonWithHole_1;
         }
         else if (polygonCoords.length == 1) {
-            var polygon_1 = new geometry_1.Polygon();
+            var polygon_1 = new geojson_2.Polygon();
             var coordinates = GeojsonHelpers.getCoordinates(polygonCoords[0]);
             if (coordinates && coordinates.length > 0) {
                 coordinates.forEach(function (coord) {
@@ -198,12 +198,12 @@ var GeojsonHelpers = /** @class */ (function () {
         }
     };
     GeojsonHelpers.getMultiPolygon = function (geometry) {
-        var multiPolygon = new geometry_1.MultiPolygon(geometry.id);
+        var multiPolygon = new geojson_2.MultiPolygon(geometry.id);
         if (geometry.coordinates && geometry.coordinates.length > 0) {
             var multiPolygonCoords = geometry.coordinates;
             multiPolygonCoords.forEach(function (polygonCoords) {
                 if (polygonCoords.length > 1) {
-                    var polygonWithHole_2 = new geometry_1.PolygonWithHole();
+                    var polygonWithHole_2 = new geojson_2.PolygonWithHole();
                     var coordinates = GeojsonHelpers.getCoordinates(polygonCoords[0]);
                     if (coordinates && coordinates.length > 0) {
                         coordinates.forEach(function (coord) {
@@ -211,7 +211,7 @@ var GeojsonHelpers = /** @class */ (function () {
                         });
                     }
                     var _loop_2 = function (index) {
-                        var polygon = new geometry_1.Polygon();
+                        var polygon = new geojson_2.Polygon();
                         var coordinates_2 = GeojsonHelpers.getCoordinates(polygonCoords[index]);
                         if (coordinates_2 && coordinates_2.length > 0) {
                             coordinates_2.forEach(function (coord) {
@@ -226,7 +226,7 @@ var GeojsonHelpers = /** @class */ (function () {
                     multiPolygon.polygons.push(polygonWithHole_2);
                 }
                 else if (polygonCoords.length == 1) {
-                    var polygon_2 = new geometry_1.Polygon();
+                    var polygon_2 = new geojson_2.Polygon();
                     var coordinates = GeojsonHelpers.getCoordinates(polygonCoords[0]);
                     if (coordinates && coordinates.length > 0) {
                         coordinates.forEach(function (coord) {
@@ -250,7 +250,7 @@ var GeojsonHelpers = /** @class */ (function () {
     };
     GeojsonHelpers.getCoordinate = function (coord) {
         if (coord && coord.length == 2) {
-            var coordinate = new coordinate_1.Coordinate(coord[0], coord[1]);
+            var coordinate = new geojson_4.Coordinate(coord[0], coord[1]);
             return coordinate;
         }
         else {

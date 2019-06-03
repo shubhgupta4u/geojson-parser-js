@@ -1,6 +1,27 @@
-import { FeatureProperty } from "./feature-property";
-import { GeometryType } from "./enum";
-import { Coordinate } from "./coordinate";
+export declare enum GeometryType {
+    Point = 0,
+    LineString = 1,
+    Polygon = 2,
+    PolygonWithHole = 3,
+    MultiPoint = 4,
+    MultiLineString = 5,
+    MultiPolygon = 6
+}
+export declare class Coordinate {
+    readonly lat: number;
+    readonly lng: number;
+    constructor(lat: number, lng: number);
+}
+export declare class FeatureCollection {
+    readonly metadata: Array<FeatureProperty>;
+    readonly geometries: Array<Geometry>;
+    constructor();
+}
+export declare class FeatureProperty {
+    readonly key: string;
+    readonly value: string;
+    constructor(key: string, value: string);
+}
 export declare abstract class Geometry {
     readonly featureProperties: Array<FeatureProperty>;
     readonly type: GeometryType;

@@ -1,7 +1,7 @@
-import { FeatureCollection } from "./models/feature";
-import { Polygon, Geometry, Point, LineString, MultiPoint, MultiLineString, MultiPolygon, PolygonWithHole } from "./models/geometry";
-import { FeatureProperty } from "./models/feature-property";
-import { Coordinate } from "./models/coordinate";
+import { FeatureCollection } from "../models/geojson";
+import { Polygon, Geometry, Point, LineString, MultiPoint, MultiLineString, MultiPolygon, PolygonWithHole } from "../models/geojson";
+import { FeatureProperty } from "../models/geojson";
+import { Coordinate } from "../models/geojson";
 
 export abstract class GeojsonHelpers {   
    protected static isValid(geoJson: any): boolean {
