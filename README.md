@@ -17,7 +17,7 @@ Output should be 'true'
 ```
 ```typescript
 import {Geojson} from 'geojson-parser-js';
-import { FeatureCollection, GeometryType, FeatureProperty, Coordinate, Geometry, Point, LineString, Polygon, PolygonWithHole, MultiPoint, MultiLineString, MultiPolygon } from 'geojson-parser-js/models/geojson';
+import { FeatureCollection, GeometryType, FeatureProperty, Coordinate, Geometry, Point, LineString, Polygon, PolygonWithHole, MultiPoint, MultiLineString, MultiPolygon } from 'geojson-parser-js/dist/models/geojson';
 let features:FeatureCollection = Geojson.parse('{ "type": "FeatureCollection",  "features": [] }');
 ```
 ```sh
