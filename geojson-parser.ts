@@ -1,11 +1,11 @@
 import { FeatureCollection } from "./models/geojson";
-import { GeojsonHelpers } from "./lib/geojson-helpers";
+import { GeojsonHelpers } from "./geojson-helpers";
 
 export abstract class Geojson extends GeojsonHelpers {
     /**
     * @Method: Parse geometries from the json string.
     * @Param {string}
-    * @Return {string}
+    * @Return {FeatureCollection}
     */
     public static parse(jsonString: string): FeatureCollection {
         try {
@@ -18,14 +18,12 @@ export abstract class Geojson extends GeojsonHelpers {
         catch (error) {
             throw error;
         }
-
-        return new FeatureCollection();
     }
 
     /**
     * @Method: Validate whether the geojon string is valid or not.
     * @Param {string}
-    * @Return {string}
+    * @Return {boolean}
     */
     public static isValid(jsonString: string): boolean {
         try {
@@ -45,4 +43,25 @@ export abstract class Geojson extends GeojsonHelpers {
             return false;
         }
     }
+    /**
+    * @Method: create a geojson string from the FeatureCollection instance.
+    * @Param {FeatureCollection}
+    * @Return {string}
+    */
+   public static create(features: FeatureCollection): string {
+    try {
+        if (!features) {
+            throw new SyntaxError("FeatureCollection instance can't be null.");
+        }
+        else{
+            let geojsonObj:any = GeojsonHelpers.create(features);
+            let geoJsonStr: string = JSON.stringify(geojsonObj);
+            return geoJsonStr;
+        }
+    }
+    catch (error) {
+        throw error;
+    }
 }
+}
+

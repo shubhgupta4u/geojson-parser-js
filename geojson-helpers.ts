@@ -1,9 +1,9 @@
-import { FeatureCollection } from "../models/geojson";
-import { Polygon, Geometry, Point, LineString, MultiPoint, MultiLineString, MultiPolygon, PolygonWithHole } from "../models/geojson";
-import { FeatureProperty } from "../models/geojson";
-import { Coordinate } from "../models/geojson";
+import { FeatureCollection } from "./models/geojson";
+import { Polygon, GeometryType, Geometry, Point, LineString, MultiPoint, MultiLineString, MultiPolygon, PolygonWithHole } from "./models/geojson";
+import { FeatureProperty } from "./models/geojson";
+import { Coordinate } from "./models/geojson";
 
-export abstract class GeojsonHelpers {   
+export abstract class GeojsonHelpers {
    protected static isValid(geoJson: any): boolean {
       if (geoJson.type && (geoJson.type.toLowerCase() == "featurecollection" || geoJson.type.toLowerCase() == "feature")
          && (
@@ -15,6 +15,196 @@ export abstract class GeojsonHelpers {
       }
       return false;
    }
+   //Start of methods for creating geojson object from FeatureCollection instance
+   protected static create(features: FeatureCollection): any {
+      {
+         try {
+            let geojsonObj: any = {};
+            geojsonObj.type = "FeatureCollection"
+            geojsonObj.features = new Array<any>();
+            if (features) {
+               if (features.metadata && features.metadata.length > 0) {
+                  geojsonObj.metadata = {};
+                  features.metadata.forEach((metadata: FeatureProperty) => {
+                     geojsonObj.metadata[metadata.key] = metadata.value;
+                  });
+               }
+               if (features.geometries && features.geometries.length > 0) {
+                  features.geometries.forEach((geometry: Geometry) => {
+                     let feature: any = {};
+                     feature.type = "Feature";
+                     if (geometry.id && geometry.id != "") {
+                        feature.id = geometry.id;
+                     }
+                     feature.properties = {};
+                     if (geometry.featureProperties && geometry.featureProperties.length > 0) {
+                        geometry.featureProperties.forEach((property: FeatureProperty) => {
+                           feature.properties[property.key] = property.value;
+                        });
+                     }
+                     feature.geometry = {};
+                     feature.geometry.type = GeojsonHelpers.GetGeojsonFeatureType(geometry.type);
+                     feature.geometry.coordinates = GeojsonHelpers.GetGeojsonGeometryCoordinates(geometry);
+                     geojsonObj.features.push(feature);
+                  });
+               }
+            }
+            return geojsonObj;
+         } catch (error) {
+            throw error;
+         }
+      }
+   }
+   private static GetGeojsonFeatureType(type: GeometryType): string {
+      switch (type) {
+         case GeometryType.Point: return "Point";
+         case GeometryType.LineString: return "LineString";
+         case GeometryType.Polygon: return "Polygon";
+         case GeometryType.PolygonWithHole: return "Polygon";
+         case GeometryType.MultiPoint: return "MultiPoint";
+         case GeometryType.MultiLineString: return "MultiLineString";
+         case GeometryType.MultiPolygon: return "MultiPolygon";
+      }
+   }
+   private static GetGeojsonGeometryCoordinates(geometry: Geometry): Array<any> {
+      let coordinates: Array<any> = new Array<any>();
+      try {
+         switch (geometry.type) {
+            case GeometryType.Point:
+               let point: Point = geometry as Point;
+               if (point.coordinate) {
+                  coordinates.push(point.coordinate.lat);
+                  coordinates.push(point.coordinate.lng);
+               }
+               break;
+            case GeometryType.LineString:
+               let lineString: LineString = geometry as LineString;
+               if (lineString.coordinates) {
+                  lineString.coordinates.forEach((coord: Coordinate) => {
+                     let innerCoordinates = new Array<number>();
+                     innerCoordinates.push(coord.lat);
+                     innerCoordinates.push(coord.lng);
+                     coordinates.push(innerCoordinates);
+                  });
+               }
+               break;
+            case GeometryType.Polygon:
+               let polygon: Polygon = geometry as Polygon;
+               if (polygon.coordinates) {
+                  coordinates = GeojsonHelpers.getPolygonCoordinate(polygon);
+               }
+               break;
+            case GeometryType.PolygonWithHole:
+               let polygonWithHole: PolygonWithHole = geometry as PolygonWithHole;
+               if (polygonWithHole.coordinates) {
+                  coordinates = GeojsonHelpers.getPolygonWithHoleCoordinate(polygonWithHole);
+               }
+               break;
+            case GeometryType.MultiPoint:
+               let multiPoint: MultiPoint = geometry as MultiPoint;
+               if (multiPoint.points) {
+                  multiPoint.points.forEach((point: Point) => {
+                     let innerCoordinates = new Array<number>();
+                     if (point.coordinate) {
+                        innerCoordinates.push(point.coordinate.lat);
+                        innerCoordinates.push(point.coordinate.lng);
+                     }
+                     coordinates.push(innerCoordinates);
+                  });
+               }
+               break;
+            case GeometryType.MultiLineString:
+               let multiLineString: MultiLineString = geometry as MultiLineString;
+               if (multiLineString.LinesString && multiLineString.LinesString.length > 0) {
+                  multiLineString.LinesString.forEach((lineString: LineString) => {
+                     let child1Coordinates = new Array<any>();
+                     lineString.coordinates.forEach((coord: Coordinate) => {
+                        let innerCoordinates = new Array<number>();
+                        innerCoordinates.push(coord.lat);
+                        innerCoordinates.push(coord.lng);
+                        child1Coordinates.push(innerCoordinates);
+                     });
+                     coordinates.push(child1Coordinates);
+                  });
+               }
+               break;
+            case GeometryType.MultiPolygon: 
+               let multiPolygon: MultiPolygon = geometry as MultiPolygon;
+               if(multiPolygon.polygons && multiPolygon.polygons.length > 0){
+                  multiPolygon.polygons.forEach((polygon: Polygon)=>{
+                     if(polygon instanceof PolygonWithHole){
+                        coordinates.push(GeojsonHelpers.getPolygonWithHoleCoordinate(polygon as PolygonWithHole));
+                     }
+                     else
+                     {
+                        coordinates.push(GeojsonHelpers.getPolygonCoordinate(polygon));
+                     }
+                  });
+               }
+            break;
+         }
+      } catch (error) {
+         throw error;
+      }
+      return coordinates;
+   }
+   private static getPolygonCoordinate(polygon: Polygon): Array<any> {
+      try {
+         let coordinates: Array<any> = new Array<any>();
+         if (polygon.coordinates) {
+            let child1Coordinates = new Array<any>();
+            polygon.coordinates.forEach((coord: Coordinate) => {
+               let innerCoordinates = new Array<number>();
+               innerCoordinates.push(coord.lat);
+               innerCoordinates.push(coord.lng);
+               child1Coordinates.push(innerCoordinates);
+            });
+            coordinates.push(child1Coordinates);
+            return coordinates;
+         }
+         else {
+            throw new SyntaxError("Coordinates can't be null for the polygon geometry.");
+         }
+      } catch (error) {
+         throw error;
+      }
+   }
+   private static getPolygonWithHoleCoordinate(polygonWithHole: PolygonWithHole): Array<any> {
+      try {
+         let coordinates: Array<any> = new Array<any>();
+         if (polygonWithHole.coordinates) {
+            let child1Coordinates = new Array<any>();
+            polygonWithHole.coordinates.forEach((coord: Coordinate) => {
+               let innerCoordinates = new Array<number>();
+               innerCoordinates.push(coord.lat);
+               innerCoordinates.push(coord.lng);
+               child1Coordinates.push(innerCoordinates);
+            });
+            coordinates.push(child1Coordinates);
+            if (polygonWithHole.holes && polygonWithHole.holes.length > 0) {
+               polygonWithHole.holes.forEach((polygon: Polygon) => {
+                  child1Coordinates = new Array<any>();
+                  polygon.coordinates.forEach((coord: Coordinate) => {
+                     let innerCoordinates = new Array<number>();
+                     innerCoordinates.push(coord.lat);
+                     innerCoordinates.push(coord.lng);
+                     child1Coordinates.push(innerCoordinates);
+                  });
+                  coordinates.push(child1Coordinates);
+               });
+            }
+            return coordinates;
+         }
+         else {
+            throw new SyntaxError("Coordinates can't be null for the polygon geometry.");
+         }
+      } catch (error) {
+         throw error;
+      }
+   }
+   //End of methods for creating geojson geojson object from FeatureCollection instance
+
+   //Start of methods for reading geometries from geojson object
    protected static parse(geoJson: any): FeatureCollection {
       {
          try {
@@ -61,6 +251,7 @@ export abstract class GeojsonHelpers {
       try {
          if (feature.type.toLowerCase() == "feature" && feature.geometry) {
             inputGeom = feature.geometry;
+            feature.geometry.id = feature.id;
          }
          else {
             throw new SyntaxError("geoJson string is not valid.");
@@ -88,7 +279,6 @@ export abstract class GeojsonHelpers {
             default:
                throw new SyntaxError("Feature type '" + inputGeom.type + "' is not supported.");
          }
-
          let featureProperties: Array<FeatureProperty> = GeojsonHelpers.getProperties(feature.properties);
          if (featureProperties && featureProperties.length > 0) {
             featureProperties.forEach((property: FeatureProperty) => {
@@ -144,10 +334,10 @@ export abstract class GeojsonHelpers {
       return lineString;
    }
    private static getMultiLineString(geometry: any): Geometry {
-      let multiLineString:MultiLineString = new MultiLineString(geometry.id);
+      let multiLineString: MultiLineString = new MultiLineString(geometry.id);
       let multiLinestringCoords: Array<any> = geometry.coordinates;
       if (multiLinestringCoords && multiLinestringCoords.length > 0) {
-         multiLinestringCoords.forEach((linestringCoords:Array<any>)=>{
+         multiLinestringCoords.forEach((linestringCoords: Array<any>) => {
             let lineString: LineString = new LineString();
             let coordinates: Array<Coordinate> = GeojsonHelpers.getCoordinates(linestringCoords);
             if (coordinates && coordinates.length > 0) {
@@ -254,5 +444,6 @@ export abstract class GeojsonHelpers {
          throw new SyntaxError("Coordinate value is invalid");
       }
    }
+   //End of methods for reading geometries from geojson object
 }
 

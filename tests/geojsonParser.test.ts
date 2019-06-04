@@ -40,6 +40,7 @@ describe('Geojson', function() {
   it('parseGeojsonWithSimpleFeatureCollection', function() {
     let geojsonStr:string= JSON.stringify(geojsonSample4);
     let result = Geojson.parse(geojsonStr);
+   
     should().exist(result);
     expect(result.geometries).to.have.lengthOf(2);
 
