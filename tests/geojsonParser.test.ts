@@ -1,6 +1,6 @@
 import { expect, should } from 'chai';
-import {Geojson} from '../geojson-parser';
-import { FeatureCollection, GeometryType,  Point, MultiPolygon, Polygon, LineString} from '../models/geojson';
+import {Geojson} from '../lib/geojson-parser';
+import { FeatureCollection, GeometryType,  Point, MultiPolygon, Polygon, LineString} from '../lib/models/geojson';
 import * as geojsonSample1 from './sample-geojson/sample1.json';
 import * as geojsonSample2 from './sample-geojson/sample2.json';
 import * as geojsonSample3 from './sample-geojson/sample3.json';

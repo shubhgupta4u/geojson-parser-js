@@ -67,5 +67,5 @@ npm run test
 ```
 ### Support
 ```Bug or Suggestion Reporting
-You can directly email any bug/issue or suggestion to my personal email id: shubhgupta4u@gmail.com
+You can directly send any bug/issue or suggestion to my personal email id: shubhgupta4u@gmail.com.
 ```

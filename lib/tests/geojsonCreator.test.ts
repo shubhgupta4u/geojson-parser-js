@@ -1,10 +1,10 @@
 import { expect, should } from 'chai';
 import {Geojson} from '../lib/geojson-parser';
 import { FeatureCollection} from '../lib/models/geojson';
-import * as geojsonSample1 from './sample-geojson/sample1.json';
-import * as geojsonSample2 from './sample-geojson/sample2.json';
-import * as geojsonSample3 from './sample-geojson/sample3.json';
-import * as geojsonSample4 from './sample-geojson/sample4.json';
+import * as geojsonSample1 from './sample-geojson/sample1.json.js.js';
+import * as geojsonSample2 from '/sample-geojson/sample2.json.js';
+import * as geojsonSample3 from './sample-geojson/sample3.json.js.js';
+import * as geojsonSample4 from './sample-geojson/sample4.json.js.js';
 
 describe('Geojson Creator', function() {
 

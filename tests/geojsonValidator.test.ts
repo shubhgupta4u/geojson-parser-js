@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import {Geojson} from '../geojson-parser';
+import {Geojson} from '../lib/geojson-parser';
 
 describe('validateGeojson Validator', function() {
  
