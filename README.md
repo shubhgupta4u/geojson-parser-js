@@ -17,7 +17,7 @@ Output should be 'true'
 ```
 ```typescript
 import {Geojson} from 'geojson-parser-js';
-import { FeatureCollection, GeometryType, FeatureProperty, Coordinate, Geometry, Point, LineString, Polygon, PolygonWithHole, MultiPoint, MultiLineString, MultiPolygon } from 'geojson-parser-js/lib/models/geojson';
+import { FeatureCollection, GeometryType, FeatureProperty, Coordinate, Geometry, Point, LineString, Polygon, PolygonWithHole, MultiPoint, MultiLineString, MultiPolygon } from 'geojson-parser-js/models/geojson';
 let features:FeatureCollection = Geojson.parse('{ "type": "FeatureCollection",  "features": [] }');
 ```
 ```sh
@@ -25,7 +25,7 @@ Output should be an instance of FeatureCollection class
 ```
 ```typescript
 import {Geojson} from 'geojson-parser-js';
-import { FeatureCollection } from 'geojson-parser-js/lib/models/geojson';
+import { FeatureCollection } from 'geojson-parser-js/models/geojson';
 let geoJsonStr:string = Geojson.create(features);
 ```
 ```sh
@@ -64,4 +64,8 @@ define(function(require,exports,module){
 ## Test 
 ```sh
 npm run test
+```
+### Support
+```Bug or Suggestion Reporting
+You can directly email any bug/issue or suggestion to my personal email id: shubhgupta4u@gmail.com
 ```
