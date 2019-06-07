@@ -6,7 +6,7 @@ import * as geojsonSample2 from './sample-geojson/sample2.json';
 import * as geojsonSample3 from './sample-geojson/sample3.json';
 import * as geojsonSample4 from './sample-geojson/sample4.json';
 
-describe('Geojson', function() {
+describe('Geojson Parser', function() {
   
   it('parseGeojsonWithNoFeature', function() {
     let validGeojson:string='{ "type": "FeatureCollection",  "features": [] }';
@@ -77,4 +77,5 @@ describe('Geojson', function() {
     expect((result.geometries[12] as LineString).coordinates).to.have.lengthOf(2);
     expect(result.geometries[12].type).equals(GeometryType.LineString);
   });
+ 
 });

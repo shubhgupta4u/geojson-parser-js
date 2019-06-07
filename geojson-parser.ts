@@ -48,20 +48,20 @@ export abstract class Geojson extends GeojsonHelpers {
     * @Param {FeatureCollection}
     * @Return {string}
     */
-   public static create(features: FeatureCollection): string {
-    try {
-        if (!features) {
-            throw new SyntaxError("FeatureCollection instance can't be null.");
+    public static create(features: FeatureCollection): string {
+        try {
+            if (!features) {
+                throw new SyntaxError("FeatureCollection instance can't be null.");
+            }
+            else {
+                let geojsonObj: any = GeojsonHelpers.create(features);
+                let geoJsonStr: string = JSON.stringify(geojsonObj);
+                return geoJsonStr;
+            }
         }
-        else{
-            let geojsonObj:any = GeojsonHelpers.create(features);
-            let geoJsonStr: string = JSON.stringify(geojsonObj);
-            return geoJsonStr;
+        catch (error) {
+            throw error;
         }
     }
-    catch (error) {
-        throw error;
-    }
-}
 }
 

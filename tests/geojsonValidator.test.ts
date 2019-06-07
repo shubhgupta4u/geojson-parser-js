@@ -1,7 +1,8 @@
 import { expect } from 'chai';
 import {Geojson} from '../geojson-parser';
 
-describe('validateGeojson', function() {
+describe('validateGeojson Validator', function() {
+ 
   it('validGeojsonWithNoFeature', function() {
     let validGeojson:string='{ "type": "FeatureCollection",  "features": [] }';
     let result = Geojson.isValid(validGeojson);
@@ -13,4 +14,5 @@ describe('validateGeojson', function() {
     let result = Geojson.isValid(invalidGeojson);
     expect(result).equal(false);
   });
+
 });

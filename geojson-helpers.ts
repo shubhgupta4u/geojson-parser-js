@@ -3,6 +3,7 @@ import { Polygon, GeometryType, Geometry, Point, LineString, MultiPoint, MultiLi
 import { FeatureProperty } from "./models/geojson";
 import { Coordinate } from "./models/geojson";
 
+
 export abstract class GeojsonHelpers {
    protected static isValid(geoJson: any): boolean {
       if (geoJson.type && (geoJson.type.toLowerCase() == "featurecollection" || geoJson.type.toLowerCase() == "feature")
@@ -128,20 +129,19 @@ export abstract class GeojsonHelpers {
                   });
                }
                break;
-            case GeometryType.MultiPolygon: 
+            case GeometryType.MultiPolygon:
                let multiPolygon: MultiPolygon = geometry as MultiPolygon;
-               if(multiPolygon.polygons && multiPolygon.polygons.length > 0){
-                  multiPolygon.polygons.forEach((polygon: Polygon)=>{
-                     if(polygon instanceof PolygonWithHole){
+               if (multiPolygon.polygons && multiPolygon.polygons.length > 0) {
+                  multiPolygon.polygons.forEach((polygon: Polygon) => {
+                     if (polygon instanceof PolygonWithHole) {
                         coordinates.push(GeojsonHelpers.getPolygonWithHoleCoordinate(polygon as PolygonWithHole));
                      }
-                     else
-                     {
+                     else {
                         coordinates.push(GeojsonHelpers.getPolygonCoordinate(polygon));
                      }
                   });
                }
-            break;
+               break;
          }
       } catch (error) {
          throw error;

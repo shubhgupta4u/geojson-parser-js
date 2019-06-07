@@ -6,15 +6,14 @@ import * as geojsonSample2 from './sample-geojson/sample2.json';
 import * as geojsonSample3 from './sample-geojson/sample3.json';
 import * as geojsonSample4 from './sample-geojson/sample4.json';
 
-describe('Geojson', function() {
-  
+describe('Geojson Creator', function() {
+
   it('createGeojsonWithNoFeature', function() {
     let validGeojson:string='{ "type": "FeatureCollection",  "features": [] }';
     let result = Geojson.parse(validGeojson);
     let geojsonStr = Geojson.create(result);
     should().exist(geojsonStr);
   });
-
   it('createGeojsonWithEmptyFeatureCollection', function() {
     let validGeojson:string= JSON.stringify(geojsonSample1);
     let result = Geojson.parse(validGeojson);
@@ -39,4 +38,5 @@ describe('Geojson', function() {
     let geojson = Geojson.create(result);
     should().exist(geojson);
   });
+ 
 });
