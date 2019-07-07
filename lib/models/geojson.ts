@@ -10,7 +10,7 @@ export enum GeometryType {
 export class Coordinate {
     public readonly lat: number;
     public readonly lng: number;
-    constructor(lat: number, lng: number) {
+    constructor(lng: number,lat: number) {
         this.lat = lat;
         this.lng = lng;
     }
@@ -45,9 +45,9 @@ export abstract class Geometry {
 export class Point extends Geometry {
     public readonly coordinate: Coordinate;
 
-    constructor(lat: number, lng: number, id: string = "") {
+    constructor(coordinate: Coordinate, id: string = "") {
         super(GeometryType.Point, id);
-        this.coordinate = new Coordinate(lat, lng);
+        this.coordinate = coordinate;
     }
 }
 export class LineString extends Geometry {

@@ -310,7 +310,7 @@ export abstract class GeojsonHelpers {
    }
    private static getPoint(geometry: any): Geometry {
       let coord: Coordinate = GeojsonHelpers.getCoordinate(geometry.coordinates);
-      let point: Point = new Point(coord.lat, coord.lng, geometry.id);
+      let point: Point = new Point(coord, geometry.id);
       return point;
    }
    private static getMultiPoint(geometry: any): Geometry {
@@ -318,7 +318,7 @@ export abstract class GeojsonHelpers {
       let coordinates: Array<Coordinate> = GeojsonHelpers.getCoordinates(geometry.coordinates);
       if (coordinates && coordinates.length > 0) {
          coordinates.forEach((coord: Coordinate) => {
-            multiPoint.points.push(new Point(coord.lat, coord.lng));
+            multiPoint.points.push(new Point(coord));
          })
       }
       return multiPoint;

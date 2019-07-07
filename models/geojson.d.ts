@@ -10,7 +10,7 @@ export declare enum GeometryType {
 export declare class Coordinate {
     readonly lat: number;
     readonly lng: number;
-    constructor(lat: number, lng: number);
+    constructor(lng: number, lat: number);
 }
 export declare class FeatureCollection {
     readonly metadata: Array<FeatureProperty>;
@@ -30,7 +30,7 @@ export declare abstract class Geometry {
 }
 export declare class Point extends Geometry {
     readonly coordinate: Coordinate;
-    constructor(lat: number, lng: number, id?: string);
+    constructor(coordinate: Coordinate, id?: string);
 }
 export declare class LineString extends Geometry {
     readonly coordinates: Array<Coordinate>;

@@ -11,7 +11,7 @@ var GeometryType;
     GeometryType[GeometryType["MultiPolygon"] = 6] = "MultiPolygon";
 })(GeometryType = exports.GeometryType || (exports.GeometryType = {}));
 class Coordinate {
-    constructor(lat, lng) {
+    constructor(lng, lat) {
         this.lat = lat;
         this.lng = lng;
     }
@@ -41,9 +41,9 @@ class Geometry {
 }
 exports.Geometry = Geometry;
 class Point extends Geometry {
-    constructor(lat, lng, id = "") {
+    constructor(coordinate, id = "") {
         super(GeometryType.Point, id);
-        this.coordinate = new Coordinate(lat, lng);
+        this.coordinate = coordinate;
     }
 }
 exports.Point = Point;
