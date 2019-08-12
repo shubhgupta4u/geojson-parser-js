@@ -6,6 +6,10 @@ npm install geojson-parser-js --save
 yarn add geojson-parser-js
 bower install geojson-parser-js --save
 ```
+## Demo 
+```sh
+You can use the demo at https://geojson-1560427286481.firebaseapp.com/
+```
 ## Usage
 ### TypeScript
 ```typescript
