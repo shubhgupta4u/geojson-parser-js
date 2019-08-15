@@ -1,6 +1,6 @@
 {
   "name": "geojson-parser-js",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "description": "A node.js/typescript library to generate and validate geojson string or parse geometries from the geojson file",
   "main": "geojson-parser.js",
   "types": "geojson-parser.d.ts",

@@ -388,37 +388,41 @@ class GeojsonHelpers {
     static getMultiPolygon(geometry) {
         let multiPolygon = new geojson_2.MultiPolygon(geometry.id);
         if (geometry.coordinates && geometry.coordinates.length > 0) {
-            let multiPolygonCoords = geometry.coordinates;
-            multiPolygonCoords.forEach((polygonCoords) => {
-                if (polygonCoords.length > 1) {
+            let coordinates = geometry.coordinates;
+            coordinates.forEach((multipolygonCoords) => {
+                if (multipolygonCoords.length == 1) {
+                    multipolygonCoords.forEach((polygonCoords) => {
+                        if (polygonCoords.length > 1) {
+                            let coordinates = GeojsonHelpers.getCoordinates(polygonCoords);
+                            if (coordinates && coordinates.length > 0) {
+                                let polygon = new geojson_2.Polygon();
+                                coordinates.forEach((coord) => {
+                                    polygon.coordinates.push(coord);
+                                });
+                                multiPolygon.polygons.push(polygon);
+                            }
+                        }
+                    });
+                }
+                else if (multipolygonCoords.length > 1) {
                     let polygonWithHole = new geojson_2.PolygonWithHole();
-                    let coordinates = GeojsonHelpers.getCoordinates(polygonCoords[0]);
+                    let coordinates = GeojsonHelpers.getCoordinates(multipolygonCoords[0]);
                     if (coordinates && coordinates.length > 0) {
                         coordinates.forEach((coord) => {
                             polygonWithHole.coordinates.push(coord);
                         });
                     }
-                    for (let index = 1; index < polygonCoords.length; index++) {
-                        let polygon = new geojson_2.Polygon();
-                        let coordinates = GeojsonHelpers.getCoordinates(polygonCoords[index]);
+                    for (let index = 1; index < multipolygonCoords.length; index++) {
+                        let coordinates = GeojsonHelpers.getCoordinates(multipolygonCoords[index]);
                         if (coordinates && coordinates.length > 0) {
+                            let polygon = new geojson_2.Polygon();
                             coordinates.forEach((coord) => {
                                 polygon.coordinates.push(coord);
                             });
+                            polygonWithHole.holes.push(polygon);
                         }
-                        polygonWithHole.holes.push(polygon);
                     }
                     multiPolygon.polygons.push(polygonWithHole);
-                }
-                else if (polygonCoords.length == 1) {
-                    let polygon = new geojson_2.Polygon();
-                    let coordinates = GeojsonHelpers.getCoordinates(polygonCoords[0]);
-                    if (coordinates && coordinates.length > 0) {
-                        coordinates.forEach((coord) => {
-                            polygon.coordinates.push(coord);
-                        });
-                    }
-                    multiPolygon.polygons.push(polygon);
                 }
             });
         }
@@ -434,7 +438,7 @@ class GeojsonHelpers {
         return coordinates;
     }
     static getCoordinate(coord) {
-        if (coord && coord.length == 2) {
+        if (coord && coord.length >= 2) {
             let coordinate = new geojson_4.Coordinate(coord[0], coord[1]);
             return coordinate;
         }
