@@ -390,43 +390,50 @@ export abstract class GeojsonHelpers {
    private static getMultiPolygon(geometry: any): Geometry {
       let multiPolygon: MultiPolygon = new MultiPolygon(geometry.id);
       if (geometry.coordinates && geometry.coordinates.length > 0) {
-         let multiPolygonCoords: Array<any> = geometry.coordinates;
-         multiPolygonCoords.forEach((polygonCoords: Array<any>) => {
-            if (polygonCoords.length > 1) {
+         let coordinates: Array<any> = geometry.coordinates;
+    
+         coordinates.forEach((multipolygonCoords: Array<any>) => {
+          
+            if(multipolygonCoords.length == 1){
+               multipolygonCoords.forEach((polygonCoords: Array<any>) => {
+                  if (polygonCoords.length > 1) {
+                     let coordinates: Array<Coordinate> = GeojsonHelpers.getCoordinates(polygonCoords);
+                     if (coordinates && coordinates.length > 0) {
+                        let polygon: Polygon = new Polygon();
+                        coordinates.forEach((coord: Coordinate) => {
+                           polygon.coordinates.push(coord);
+                        });
+                        multiPolygon.polygons.push(polygon);
+                     }
+                  }
+               });
+            }
+            else  if(multipolygonCoords.length > 1){
                let polygonWithHole: PolygonWithHole = new PolygonWithHole();
-               let coordinates: Array<Coordinate> = GeojsonHelpers.getCoordinates(polygonCoords[0]);
+               let coordinates: Array<Coordinate> = GeojsonHelpers.getCoordinates(multipolygonCoords[0]);
                if (coordinates && coordinates.length > 0) {
                   coordinates.forEach((coord: Coordinate) => {
                      polygonWithHole.coordinates.push(coord);
-                  })
+                  });
                }
-               for (let index = 1; index < polygonCoords.length; index++) {
-                  let polygon: Polygon = new Polygon();
-                  let coordinates: Array<Coordinate> = GeojsonHelpers.getCoordinates(polygonCoords[index]);
+               for (let index = 1; index < multipolygonCoords.length; index++) {
+                  let coordinates: Array<Coordinate> = GeojsonHelpers.getCoordinates(multipolygonCoords[index]);
                   if (coordinates && coordinates.length > 0) {
+                     let polygon: Polygon = new Polygon();
                      coordinates.forEach((coord: Coordinate) => {
                         polygon.coordinates.push(coord);
-                     })
+                     });
+                     polygonWithHole.holes.push(polygon);
                   }
-                  polygonWithHole.holes.push(polygon);
                }
                multiPolygon.polygons.push(polygonWithHole);
-            }
-            else if (polygonCoords.length == 1) {
-               let polygon: Polygon = new Polygon();
-               let coordinates: Array<Coordinate> = GeojsonHelpers.getCoordinates(polygonCoords[0]);
-               if (coordinates && coordinates.length > 0) {
-                  coordinates.forEach((coord: Coordinate) => {
-                     polygon.coordinates.push(coord);
-                  })
-               }
-               multiPolygon.polygons.push(polygon);
             }
          });
       }
       return multiPolygon;
    }
    private static getCoordinates(coords: Array<any>): Array<Coordinate> {
+     
       let coordinates: Array<Coordinate> = new Array<Coordinate>();
       if (coords && coords.length > 0) {
          coords.forEach((coord: Array<number>) => {
@@ -436,7 +443,7 @@ export abstract class GeojsonHelpers {
       return coordinates;
    }
    private static getCoordinate(coord: Array<number>): Coordinate {
-      if (coord && coord.length == 2) {
+      if (coord && coord.length >= 2) {
          let coordinate: Coordinate = new Coordinate(coord[0], coord[1]);
          return coordinate;
       }

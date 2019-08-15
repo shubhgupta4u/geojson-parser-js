@@ -3,11 +3,53 @@ import {Geojson} from '../lib/geojson-parser';
 import { FeatureCollection, GeometryType,  Point, MultiPolygon, Polygon, LineString} from '../lib/models/geojson';
 import * as geojsonSample1 from './sample-geojson/sample1.json';
 import * as geojsonSample2 from './sample-geojson/sample2.json';
-import * as geojsonSample3 from './sample-geojson/sample3.json';
 import * as geojsonSample4 from './sample-geojson/sample4.json';
-
+import * as geojsonUSSouth from './sample-geojson/US_South.json';
+import * as geojsonUSNorthEast from './sample-geojson/US_NorthEast.json';
+import * as geojsonMultiPolygon from './sample-geojson/MultiPolygon.json';
+import * as geojsonMultiPolygonWithHole from './sample-geojson/MultiPolygonWithHole.json';
+import * as geojsonMultiPoint from './sample-geojson/MultiPoint.json';
+import * as geojsonMultiLineString from './sample-geojson/MultiLineString.json';
 describe('Geojson Parser', function() {
-  
+  it('parseMultiPoint', function() {
+    let geojsonStr:string= JSON.stringify(geojsonMultiPoint);
+    let result = Geojson.parse(geojsonStr);
+    expect(result).instanceOf(FeatureCollection);
+    expect(result.geometries).to.have.lengthOf(1);
+  });
+  it('parseMultiLineString', function() {
+    let geojsonStr:string= JSON.stringify(geojsonMultiLineString);
+    let result = Geojson.parse(geojsonStr);
+    expect(result).instanceOf(FeatureCollection);
+    expect(result.geometries).to.have.lengthOf(1);
+  });
+
+  it('parseMultiPolygon', function() {
+    let geojsonStr:string= JSON.stringify(geojsonMultiPolygon);
+    let result = Geojson.parse(geojsonStr);
+    expect(result).instanceOf(FeatureCollection);
+    expect(result.geometries).to.have.lengthOf(1);
+  });
+  it('parseMultiPolygonWithHole', function() {
+    let geojsonStr:string= JSON.stringify(geojsonMultiPolygonWithHole);
+    let result = Geojson.parse(geojsonStr);
+    expect(result).instanceOf(FeatureCollection);
+    expect(result.geometries).to.have.lengthOf(1);
+  });
+
+  it('parseGeojsonUSNorthEast', function() {
+    let geojsonStr:string= JSON.stringify(geojsonUSNorthEast);
+    let result = Geojson.parse(geojsonStr);
+    expect(result).instanceOf(FeatureCollection);
+    expect(result.geometries).to.have.lengthOf(1);
+  });
+  it('parseGeojsonUS_South', function() {
+    let geojsonStr:string= JSON.stringify(geojsonUSSouth);
+    let result = Geojson.parse(geojsonStr);
+    expect(result).instanceOf(FeatureCollection);
+    expect(result.geometries).to.have.lengthOf(1);
+  });
+
   it('parseGeojsonWithNoFeature', function() {
     let validGeojson:string='{ "type": "FeatureCollection",  "features": [] }';
     let result = Geojson.parse(validGeojson);
@@ -26,16 +68,6 @@ describe('Geojson Parser', function() {
     let result = Geojson.parse(geojsonStr);
     should().exist(result);
     expect(result.geometries).to.have.lengthOf(0);
-  });
-  it('parseGeojsonWithSimpleFeature', function() {
-    let geojsonStr:string= JSON.stringify(geojsonSample3);    
-    let result:FeatureCollection = Geojson.parse(geojsonStr);
-    should().exist(result);
-    expect(result.geometries).to.have.lengthOf(1);
-    expect(result.geometries[0].featureProperties).to.have.lengthOf(1);
-    expect(result.geometries[0]).instanceOf(Point);
-    should().exist((result.geometries[0] as Point).coordinate);
-    expect(result.geometries[0].type).equals(GeometryType.Point);
   });
   it('parseGeojsonWithSimpleFeatureCollection', function() {
     let geojsonStr:string= JSON.stringify(geojsonSample4);

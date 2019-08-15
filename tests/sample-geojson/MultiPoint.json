@@ -1,10 +1,9 @@
 {
   "type": "Feature",
   "geometry": {
-    "type": "Point",
+    "type": "MultiPoint", 
     "coordinates": [
-      125.6,
-      10.1
+        [10, 40], [40, 30], [20, 20], [30, 10]
     ]
   },
   "properties": {
