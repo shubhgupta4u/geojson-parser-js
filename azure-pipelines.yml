@@ -20,3 +20,28 @@ steps:
     npm run build
     npm test
   displayName: 'npm install, build and test'
+
+- task: CreatePullRequest@1
+  inputs:
+    repoType: Azure DevOps / GitHub
+    githubEndpoint: 'https://github.com/shubhgupta4u/geojson-parser-js.git' # When you choose GitHub in `repoType` you need to specify here the GitHub service connection
+    # By default the PR will be for the current repository
+    # You can select another repository from this project or onther project in your account
+    # For this, specify `select` in `repositorySelectionMethod` and put the project id & git repo id
+    repositorySelectionMethod: select 
+    projectId: '7fcdaf44-b831-4faa-b2fe-8k7a19a1d1af'
+    gitRepositoryId: 'a743g5c4-85ec-4a4e-bf42-78964d551234'
+    sourceBranch: '$(Build.SourceBranch)'
+    targetBranch: 'master'
+    title: 'Test'
+    description: 'Test' # Optional
+    #reviewers: For Azure DevOps: 'test@test.com;MyTeam'. For GitHub: `username;username2` # Optional
+    isDraft: false #/ true (Default: false) 
+    #linkWorkItems: false / true (Default: true)
+    autoComplete: true #false / true (Default: false) 
+    mergeStrategy: 'noFastForward' #(default) / squash / rebase / rebaseMerge'
+    deleteSourch:  false #/ true (Default: false) # Optional
+    commitMessage: 'Test Comment' # Optional
+    transitionWorkItems:  false #/ true (Default: false) # Optional
+  env:
+    System_AccessToken: $(System.AccessToken)
