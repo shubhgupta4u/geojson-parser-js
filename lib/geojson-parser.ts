@@ -10,7 +10,7 @@ export abstract class Geojson extends GeojsonHelpers {
     public static parse(jsonString: string): FeatureCollection {
         try {
             if (!jsonString || jsonString == "") {
-                throw new SyntaxError("jsonString can't be null or empty.");
+                throw new SyntaxError("jsonString can't be null or empty. ");
             }
             let geoJson: any = JSON.parse(jsonString);
             return GeojsonHelpers.parse(geoJson);
