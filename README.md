@@ -11,7 +11,7 @@ bower install geojson-parser-js --save
 You can use the demo at https://geojson-1560427286481.firebaseapp.com/
 ```
 ## Usage
-### TypeScript
+### TypeScript  
 ```typescript
 import {Geojson} from 'geojson-parser-js';
 var isValid = Geojson.isValid({ "type": "FeatureCollection",  "features": [] });
