@@ -217,7 +217,7 @@ export abstract class GeojsonHelpers {
             let featureArray: Array<any>;
             if (geoJson.features) {
                featureArray = geoJson.features;
-            } else {
+            }else {
                featureArray = new Array<any>();
                featureArray.push(geoJson);
             }

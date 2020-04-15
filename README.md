@@ -8,7 +8,7 @@ bower install geojson-parser-js --save
 ```
 ## Demo 
 ```sh
-You can use the demo at https://geojson-1560427286481.firebaseapp.com/
+You can use the demo at https://www.geojson.in/
 ```
 ## Usage
 ### TypeScript  
