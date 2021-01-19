@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const geojson_helpers_1 = require("./geojson-helpers");
-class Geojson extends geojson_helpers_1.GeojsonHelpers {
+module.exports = class Geojson extends geojson_helpers_1.GeojsonHelpers {
     /**
     * @Method: Parse geometries from the json string.
     * @Param {string}
@@ -63,4 +63,3 @@ class Geojson extends geojson_helpers_1.GeojsonHelpers {
         }
     }
 }
-exports.Geojson = Geojson;
